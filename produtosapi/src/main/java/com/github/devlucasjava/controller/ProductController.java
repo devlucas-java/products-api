@@ -6,6 +6,8 @@ import com.github.devlucasjava.repository.ProductRepository;
 import com.github.devlucasjava.repository.ProductRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -19,7 +21,7 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    // esse ele salva o produto
+    // esse ele salva o product
     @PostMapping("/save")
     public Product salvar(@RequestBody Product product) { // PERCEBI QUE SEM O   *@RequestBody*  , ELE NAO CONSEQUE PACTURAR OS DADOS QUE O USUARIO PASSOU PELA REQUISICAO
         System.out.println("Produto salvo com sucesso" + product);
@@ -32,23 +34,30 @@ public class ProductController {
         return product;
     }
 
-    // esse ele obtem o procucto pelo id
+    // esse ele obtem o procuct pelo id
     @GetMapping("/find/{id}")
     public Product fingById(@PathVariable("id") String id) {
-        return productRepository.findById(id).orElse(null);
+        Optional<Product> product = productRepository.findById(id);
+        return product.orElse(null);
+        //return productRepository.findById(id).orElse(null);
     }
 
-    // esse ele deleta o procucto pelo id
+    // esse ele deleta o procuct pelo id
     @DeleteMapping("/delete/{id}")
     public void deletar(@PathVariable("id") String id) {
         productRepository.deleteById(id);
     }
 
-    // esse ele atualiza o procucto pelo id
-    @PutMapping("/put/{id}")
+    // esse ele atualiza o procuct pelo id
+    @PutMapping("/update/{id}")
     public void atualizar(@PathVariable("id") String id, @RequestBody Product product) {
         product.setId(id);
         productRepository.save(product);
         System.out.println("Produto atualizado com sucesso" + product);
+    }
+
+    @GetMapping("/find/name/{name}")
+    public List<Product> findNome( @PathVariable("name") String name) {
+        return productRepository.findByName(name);
     }
 }

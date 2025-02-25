@@ -16,6 +16,13 @@ public class ProductsApi {
 
 	public static void main(String[] args) {
 		SpringApplication.run(com.github.devlucasjava.ProductsApi.class, args);
+		String x = "2";
+		String y = "2";
+		System.out.println("Resutado da soma " + x + y);
+		int xi = 2;
+		int yi = 2;
+		int soma = xi + yi;
+		System.out.println("Resutado da soma " + soma);
 	}
 
 }
